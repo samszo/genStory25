@@ -7,15 +7,30 @@
 </head>
 <body>
     <h1>Mental Health</h1>
-    <table id="csv-table" border="1">
-        <thead></thead>
-        <tbody></tbody>
-    </table>
+    <h2 id="resultMaladie"></h2>
+    <button id="loadData">Generate Maladie</button>
     <script>
+        let nomMaladie=[],caractMaladie=[];
+
+        d3.select("#loadData").on("click", function() {
+            let titre = nomMaladie[Math.floor(Math.random() * nomMaladie.length)]
+                + " "+caractMaladie[Math.floor(Math.random() * caractMaladie.length)];
+            d3.select("#resultMaladie").text(titre);
+            
+        });
         // Remplacez l'URL ci-dessous par le lien de partage CSV de votre Google Sheet
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSOoi4qBl_e_HcSjybQ0Syd_gU5NHQm8kxkBztvTXW-1LBevYxuUTEkADtmeLWAkcvJrSQ6KMZtXpRa/pub?gid=0&single=true&output=csv';
         d3.csv(csvUrl).then(data => {
             console.log(data);
+            //filtre les données
+            data.forEach(d => {
+                if(d.nomDeLaMaladie)nomMaladie.push(d.nomDeLaMaladie);
+                if(d.caracteristiqueDeLaMaladie)caractMaladie.push(d.caracteristiqueDeLaMaladie);
+            });
+            console.log(nomMaladie);
+            console.log(caractMaladie);
+
+            
         });
     </script>
 </body>
