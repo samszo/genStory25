@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; min-height: 40px; }
+    </style>
+</head>
+<body>
+    <h1>Text Generator</h1>
+    <form id="textForm">
+        <label for="inputText">Enter your text:</label><br>
+        <input type="text" id="inputText" name="inputText" required>
+        <button type="submit">Generate</button>
+    </form>
+    <div id="output"></div>
+
+    <script>
+        let animals = ["dog", "cat", "fish", "bird"],
+            colors = ["red", "blue", "green", "yellow"],
+            fruits = ["apple", "banana", "orange", "grape"];
+        function generateText(input) {
+            // Example: reverse the input text
+            //return input.split('').reverse().join('');
+            let a = animals[Math.floor(Math.random() * animals.length)],
+                c = colors[Math.floor(Math.random() * colors.length)],
+                f = fruits[Math.floor(Math.random() * fruits.length)];
+                out = input.replace('[animal]', a);
+                out = out.replace('[color]', c);
+                out = out.replace('[fruit]', f);
+            return out;
+
+        }
+
+        document.getElementById('textForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('inputText').value;
+            const result = generateText(input);
+            document.getElementById('output').textContent = result;
+        });
+    </script>
+</body>
+</html>
