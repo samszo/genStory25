@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mental Health</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Mental Health</h1>
+    <table id="csv-table" border="1">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        // Remplacez l'URL ci-dessous par le lien de partage CSV de votre Google Sheet
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSOoi4qBl_e_HcSjybQ0Syd_gU5NHQm8kxkBztvTXW-1LBevYxuUTEkADtmeLWAkcvJrSQ6KMZtXpRa/pub?gid=0&single=true&output=csv';
+        d3.csv(csvUrl).then(data => {
+            console.log(data);
+        });
+    </script>
+</body>
+</html></table>
