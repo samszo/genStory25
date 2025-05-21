@@ -1,77 +1,78 @@
 <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Mental Health</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- ce lien dirige vers librairie js qui traite les données. le lien a été obtenu avec Copilot (très utile lol) -->
-  </head>
-  <body>
-    <h1>Mental Health</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShapeShifter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 2rem;
+    }
+    .shape-container img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    .color-buttons button {
+      width: 50px;
+      height: 50px;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShapeShifter</h1>
+  <div class="shape-container" role="region" aria-label="Interactive shape coloring">
+    <img id="shape" src="shape1-black.svg" alt="Abstract black shape" />
+    <div class="color-buttons">
+      <button style="background:orange" onclick="transformShape('orange')" aria-label="Color with orange"></button>
+      <button style="background:blue" onclick="transformShape('blue')" aria-label="Color with blue"></button>
+      <button style="background:pink" onclick="transformShape('pink')" aria-label="Color with pink"></button>
+      <button style="background:green" onclick="transformShape('green')" aria-label="Color with green"></button>
+    </div>
+  </div>
+  <div class="result" id="result" aria-live="polite"></div>
 
-    <button id="loadData">Generate maladie</button>
-    <h2 id="resultTitle"></h2>
+  <script>
+    function transformShape(color) {
+      const shape = document.getElementById("shape");
+      const result = document.getElementById("result");
+      const messages = {
+        orange: {
+          img: "shape1-fire.svg",
+          text: "This shape holds the heat of survival."
+        },
+        blue: {
+          img: "shape1-water.svg",
+          text: "Calm, adaptable, always in motion."
+        },
+        pink: {
+          img: "shape1-flower.svg",
+          text: "Softness can bloom from anything."
+        },
+        green: {
+          img: "shape1-leaf.svg",
+          text: "Growth begins with a single curve."
+        }
+      };
 
-    <p id="resultatTreatment"></p>
-
-    <script>
-      let nomMaladie = [],
-        caractMaladie = [],
-        ideeTraitement = [];
-
-      d3.select("#loadData").on("click", function () {
-        let titre =
-          nomMaladie[Math.floor(Math.random() * nomMaladie.length)] +
-          " " +
-          caractMaladie[Math.floor(Math.random() * caractMaladie.length)] +
-          " \n ";
-        // l'opération fait l'aléatoire
-        // concaténation avec espace
-        // et met tout dans une variable titre
-        // donc pour avoir le résultat du traitement, il faut faire la même chose
-        let traitement = +" ";
-        ideeTraitement[Math.floor(Math.random() * ideeTraitement.length)];
-
-        d3.select("#resultTitle").text(titre);
-        d3.select("#resultatTreatment").text(traitement);
-        // peux tu m'expliquer ce que fait la ligne précédente ?
-        // d3.select("#resultTitle") sélectionne l'élément HTML avec l'id resultTitle
-        // .text(titre) met le texte de cet élément à la valeur de la variable titre
-        // je voudrais faire apreil avec le paragraphe id resultatTreatment
-        // d3.select("#resultatTreatment").text(titre);
-
-        // dans la boite h2 id resultatMaladie, ça met le contenu de la variable titre
-      });
-
-      // l'URL ci-dessous est le le lien de partage CSV de votre Google Sheet
-      const csvUrl =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vSOoi4qBl_e_HcSjybQ0Syd_gU5NHQm8kxkBztvTXW-1LBevYxuUTEkADtmeLWAkcvJrSQ6KMZtXpRa/pub?gid=0&single=true&output=csv";
-      // obtenu avec copilot :
-      d3.csv(csvUrl).then((data) => {
-        console.log(data);
-        //début de la boucle :
-        // pour chaque élément de la liste, la boucle PUSHE (envoie) les valeurs des colonnes
-        // nomDeLaMaladie et caracteristiqueDeLaMaladie
-        // mais SI la liste est vide, on ne fait rien
-
-        // data est un tableau d'objets, chaque objet représente une ligne du CSV
-        // d est un objet qui représente une ligne du CSV
-        // qu'est ce que le point ? entre d. et nomDeLaMaladie ?
-        // c'est un opérateur d'accès aux propriétés d'un objet
-        // d est un objet qui contient les données de la ligne courante
-        // et nomDeLaMaladie est une propriété de cet objet
-
-        data.forEach((d) => {
-          if (d.nomDeLaMaladie) nomMaladie.push(d.nomDeLaMaladie);
-          if (d.caracteristiqueDeLaMaladie) caractMaladie.push(d.caracteristiqueDeLaMaladie);
-
-          if (d.traitement) ideeTraitement.push(d.traitement);
-        });
-
-        console.log(nomMaladie);
-        console.log(caractMaladie);
-        console.log(ideeTraitement);
-      });
-    </script>
-  </body>
+      if (messages[color]) {
+        shape.src = messages[color].img;
+        shape.alt = messages[color].text;
+        result.textContent = messages[color].text;
+      }
+    }
+  </script>
+</body>
 </html>
