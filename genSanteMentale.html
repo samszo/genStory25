@@ -17,7 +17,10 @@
     <script>
       let nomMaladie = [],
         caractMaladie = [],
-        ideeTraitement = [];
+        verbeRecommand = [],
+        actionTraitement = [],
+        ideeTraitement = [],
+        ponctuation = [];
 
       d3.select("#loadData").on("click", function () {
         let titre =
@@ -25,12 +28,14 @@
           " " +
           caractMaladie[Math.floor(Math.random() * caractMaladie.length)] +
           " \n ";
-        // l'opération fait l'aléatoire
-        // concaténation avec espace
-        // et met tout dans une variable titre
-        // donc pour avoir le résultat du traitement, il faut faire la même chose
-        let traitement = +" ";
-        ideeTraitement[Math.floor(Math.random() * ideeTraitement.length)];
+
+        let traitement =
+          verbeRecommand[Math.floor(Math.random() * verbeRecommand.length)] +
+          " " +
+          actionTraitement[Math.floor(Math.random() * actionTraitement.length)] +
+          " " +
+          ideeTraitement[Math.floor(Math.random() * ideeTraitement.length)] +
+          ponctuation[Math.floor(Math.random() * ponctuation.length)];
 
         d3.select("#resultTitle").text(titre);
         d3.select("#resultatTreatment").text(traitement);
@@ -39,8 +44,6 @@
         // .text(titre) met le texte de cet élément à la valeur de la variable titre
         // je voudrais faire apreil avec le paragraphe id resultatTreatment
         // d3.select("#resultatTreatment").text(titre);
-
-        // dans la boite h2 id resultatMaladie, ça met le contenu de la variable titre
       });
 
       // l'URL ci-dessous est le le lien de partage CSV de votre Google Sheet
@@ -64,8 +67,11 @@
         data.forEach((d) => {
           if (d.nomDeLaMaladie) nomMaladie.push(d.nomDeLaMaladie);
           if (d.caracteristiqueDeLaMaladie) caractMaladie.push(d.caracteristiqueDeLaMaladie);
-
+          if (d.verbeDeRecommandationDeTraitement)
+            verbeRecommand.push(d.verbeDeRecommandationDeTraitement);
+          if (d.actionPourLeTraitement) actionTraitement.push(d.actionPourLeTraitement);
           if (d.traitement) ideeTraitement.push(d.traitement);
+          if (d.signeDePonctuation) ponctuation.push(d.signeDePonctuation);
         });
 
         console.log(nomMaladie);
@@ -75,3 +81,9 @@
     </script>
   </body>
 </html>
+
+<!-- Au début du code JS :
+// l'opération fait l'aléatoire
+// concaténation avec espace
+// et met tout dans une variable titre
+// donc pour avoir le résultat du traitement, il faut faire la même chose -->
