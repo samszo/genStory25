@@ -2,25 +2,71 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Mental Health</title>
+    <title>Fiche patient.e.s</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- ce lien dirige vers librairie js qui traite les données. le lien a été obtenu avec Copilot (très utile lol) -->
+    <style>
+      body {
+        font-family: helvetica;
+        padding: 10px;
+      }
+      #loadData {
+        background-color: rgb(31, 206, 255);
+        color: white;
+        font-size: 15pt;
+        padding: 10px;
+        border: none;
+      }
+      #disease-block {
+        background-color: #f0f0f0;
+        padding: 20px;
+        margin: 20px;
+      }
+      .hidden {
+        display: none;
+      }
+      ul {
+        list-style-type: none;
+      }
+      h1 #resultTitle {
+        font-size: large;
+        color: blue;
+      }
+      .end {
+        background-color: rgb(31, 206, 255);
+        padding: 60px;
+        /* display: flex;
+        align-items: center;
+        justify-content: space-evenly; */
+      }
+    </style>
   </head>
   <body>
-    <h1>Mental Health</h1>
+    <h1>Mental Health researchs<br />What trouble do you have ?(french)</h1>
 
-    <button id="loadData">Generate maladie</button>
-    <h2 id="resultTitle"></h2>
+    <button id="loadData">Establish a diagnosis</button>
 
-    <p id="resultatTreatment"></p>
+    <div id="disease-block" class="hidden">
+      <h1 id="resultTitle"></h1>
+      <h3 class="topic-head">Cette maladie se remarque par :</h3>
+      <ul id="resultClinicalSigns"></ul>
+      <h3 class="topic-head">Traitements possibles :</h3>
+      <ul id="resultatTreatment"></ul>
+      <footer class="end">
+        <h2>Le conseil du doc :</h2>
+        <h4 id="docteurGivesAdvices"></h4>
+      </footer>
+    </div>
 
     <script>
       let nomMaladie = [],
         caractMaladie = [],
+        signesCli = [],
         verbeRecommand = [],
         actionTraitement = [],
         ideeTraitement = [],
-        ponctuation = [];
+        ponctuation = [],
+        verbConseil = [],
+        conseil = [];
 
       d3.select("#loadData").on("click", function () {
         let titre =
@@ -29,7 +75,12 @@
           caractMaladie[Math.floor(Math.random() * caractMaladie.length)] +
           " \n ";
 
-        let traitement =
+        let nombreSignes = Math.floor(Math.random() * 5) + 1;
+        // 2. Mélanger le tableau et prendre les n premiers
+        let signesMelanges = signesCli.sort(() => 0.5 - Math.random());
+        let signesChoisis = signesMelanges.slice(0, nombreSignes);
+
+        let phraseTraitement =
           verbeRecommand[Math.floor(Math.random() * verbeRecommand.length)] +
           " " +
           actionTraitement[Math.floor(Math.random() * actionTraitement.length)] +
@@ -37,13 +88,21 @@
           ideeTraitement[Math.floor(Math.random() * ideeTraitement.length)] +
           ponctuation[Math.floor(Math.random() * ponctuation.length)];
 
+        let phraseConseil =
+          verbConseil[Math.floor(Math.random() * verbConseil.length)] +
+          " " +
+          conseil[Math.floor(Math.random() * conseil.length)] +
+          ponctuation[Math.floor(Math.random() * ponctuation.length)];
+
         d3.select("#resultTitle").text(titre);
-        d3.select("#resultatTreatment").text(traitement);
-        // peux tu m'expliquer ce que fait la ligne précédente ?
-        // d3.select("#resultTitle") sélectionne l'élément HTML avec l'id resultTitle
-        // .text(titre) met le texte de cet élément à la valeur de la variable titre
-        // je voudrais faire apreil avec le paragraphe id resultatTreatment
-        // d3.select("#resultatTreatment").text(titre);
+        d3.select("#resultatTreatment").text(phraseTraitement);
+        d3.select("#docteurGivesAdvices").text(phraseConseil);
+
+        let ul = d3.select("#resultClinicalSigns");
+        ul.html("");
+        signesChoisis.forEach((signeC) => {
+          ul.append("li").text(signeC);
+        });
       });
 
       // l'URL ci-dessous est le le lien de partage CSV de votre Google Sheet
@@ -72,11 +131,19 @@
           if (d.actionPourLeTraitement) actionTraitement.push(d.actionPourLeTraitement);
           if (d.traitement) ideeTraitement.push(d.traitement);
           if (d.signeDePonctuation) ponctuation.push(d.signeDePonctuation);
+          if (d.signesCliniques) signesCli.push(d.signesCliniques);
+          if (d.verbeCauses) verbConseil.push(d.verbeCauses);
+          if (d.causes1) conseil.push(d.causes1);
+        });
+        document.getElementById("loadData").addEventListener("click", function () {
+          // Affiche le contenu caché
+          document.getElementById("disease-block").classList.remove("hidden");
         });
 
         console.log(nomMaladie);
         console.log(caractMaladie);
         console.log(ideeTraitement);
+        console.log(conseil);
       });
     </script>
   </body>
@@ -87,3 +154,10 @@
 // concaténation avec espace
 // et met tout dans une variable titre
 // donc pour avoir le résultat du traitement, il faut faire la même chose -->
+
+<!-- sur la ligne d3.select :
+ // peux tu m'expliquer ce que fait la ligne précédente ?
+        // d3.select("#resultTitle") sélectionne l'élément HTML avec l'id resultTitle
+        // .text(titre) met le texte de cet élément à la valeur de la variable titre
+        // je voudrais faire apreil avec le paragraphe id resultatTreatment
+        // d3.select("#resultatTreatment").text(titre); -->
