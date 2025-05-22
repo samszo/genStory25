@@ -1,0 +1,61 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix o: <http://omeka.org/s/vocabs/o#> .
+@prefix genstory: <https://jardindesconnaissances.univ-paris8.fr/onto/genstory#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#>.
+
+<https://jardindesconnaissances.univ-paris8.fr/onto/genstory#> a owl:Ontology ;
+    dcterms:title "Générateur d'histoire" .
+
+genstory:workflow a rdfs:Class ;
+    rdfs:label "comfyUI workflow" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:comfyParamsPathPrompt a rdf:Property ;
+    rdfs:label "comfyUI path for prompt in params" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:comfyParamsPathSeed a rdf:Property ;
+    rdfs:label "comfyUI path for seed in params" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:generateurParamsIdDico a rdf:Property ;
+    rdfs:label "generateur dictionary identifier" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:generateurParamsIdOeu a rdf:Property ;
+    rdfs:label "generateur work identifier" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:generateurParamsGen a rdf:Property ;
+    rdfs:label "generateur default generator" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:storyboard a rdfs:Class ;
+    rdfs:label "storyboard" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:hasGenParams a rdf:Property ;
+    rdfs:label "has generateur parameters" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:associatedMedia a rdf:Property ;
+    rdfs:label "associated media" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+genstory:comfyParamsPathText a rdf:Property ;
+    rdfs:label "comfyUI path for text in params" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
