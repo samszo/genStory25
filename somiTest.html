@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShapeShifter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 2rem;
+    }
+    .shape-container img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    .color-buttons button {
+      width: 50px;
+      height: 50px;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShapeShifter</h1>
+  <div class="shape-container" role="region" aria-label="Interactive shape coloring">
+    <img id="shape" src="shape1-black.svg" alt="Abstract black shape" />
+    <div class="color-buttons">
+      <button style="background:orange" onclick="transformShape('orange')" aria-label="Color with orange"></button>
+      <button style="background:blue" onclick="transformShape('blue')" aria-label="Color with blue"></button>
+      <button style="background:pink" onclick="transformShape('pink')" aria-label="Color with pink"></button>
+      <button style="background:green" onclick="transformShape('green')" aria-label="Color with green"></button>
+    </div>
+  </div>
+  <div class="result" id="result" aria-live="polite"></div>
+
+  <script>
+    function transformShape(color) {
+      const shape = document.getElementById("shape");
+      const result = document.getElementById("result");
+      const messages = {
+        orange: {
+          img: "shape1-fire.svg",
+          text: "This shape holds the heat of survival."
+        },
+        blue: {
+          img: "shape1-water.svg",
+          text: "Calm, adaptable, always in motion."
+        },
+        pink: {
+          img: "shape1-flower.svg",
+          text: "Softness can bloom from anything."
+        },
+        green: {
+          img: "shape1-leaf.svg",
+          text: "Growth begins with a single curve."
+        }
+      };
+
+      if (messages[color]) {
+        shape.src = messages[color].img;
+        shape.alt = messages[color].text;
+        result.textContent = messages[color].text;
+      }
+    }
+  </script>
+</body>
+</html>
